@@ -1,5 +1,4 @@
 def solution(prices):
-    result = [0 for _ in range(len(prices))]
     result = []
     
     for i in range(len(prices)-1):
