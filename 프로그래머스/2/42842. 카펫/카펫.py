@@ -1,16 +1,14 @@
-# 카펫
-
 def solution(brown, yellow):
+    # 최소 너비
     w, h = 3, 3
-    
-    while True:
+    yel, bro = 0, 0
+    while 1:
         yel = (w-2) * (h-2)
-        bro = w*h - yel
+        bro = (w*h) - yel
         
-        if yellow == yel and bro == brown:
+        if bro == brown and yel == yellow:
             return [w, h]
-        
-        if yellow > yel and bro == brown:
+        elif yellow > yel and bro == brown:
             w -= 1
             h += 1
         else:
