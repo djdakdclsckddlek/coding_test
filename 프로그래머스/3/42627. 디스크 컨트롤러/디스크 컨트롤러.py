@@ -1,25 +1,26 @@
-
 import heapq as hp
-
 def solution(jobs):
-    answer, now, i = 0,0,0
-    start = -1
+    answer = 0
+    start, time = -1, 0
+    done = 0
     heap = []
     
-    while i < len(jobs):
-        # 현재 시점에서 처리할 수 있는 작업을 heap에 저장
-        for j in jobs:
-            if start < j[0] <= now:
-                hp.heappush(heap, [j[1], j[0]])
-
-        if len(heap) > 0: # 처리할 작업이 있는 경우
-            cur = hp.heappop(heap)
-            start = now
-            now += cur[0]  # 현재시간에 대기시간 추가
-            answer += now - cur[1] # 작업 요청시간부터 종료시간까지의 시간 계산
-            i += 1
-        else: # 처리할 작업이 없는 경우 다음 시간으로 넘어가기
-            now += 1
+    while done < len(jobs):
+        
+        # 가능한거 추가
+        for i in range(len(jobs)):
+            if start < jobs[i][0] <= time:
+                hp.heappush(heap, [jobs[i][1], jobs[i][0]])
+        
+        # 가능한거있으면 가장 빠르게 진행할수있는것 부터 시간추가
+        if heap:
+            now = hp.heappop(heap)
+            start = time
+            time += now[0] 
             
+            answer += (time - now[1])
+            done += 1
+        #업승면 시간 +1
+        else:
+            time += 1
     return answer // len(jobs)
-solution([[0, 3], [1, 9], [2, 6]])
